@@ -2,6 +2,7 @@ package com.zhongyang.li.graphQLDemo;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLList;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;
@@ -41,17 +42,7 @@ public class Demo1 {
     	        return value;
     	    }
     	};
-    	DataFetcher calculateComplicatedValue1 = new DataFetcher() {
-    	    @Override		
-    	    public  Object get(DataFetchingEnvironment environment) {
-    	        // environment.getSource() is the value of the surrounding
-    	        // object. In this case described by objectType
-    	        List<String> value = new ArrayList<String>();// Perhaps getting from a DB or whatever 
-    	        value.add("Hello11");
-    	        value.add("Hello111");
-    	        return value;
-    	    }
-    	};
+    	
 	      GraphQLObjectType queryType = newObject()
 	      .name("helloWorldQuery")
 	      .field(newFieldDefinition()
@@ -63,6 +54,17 @@ public class Demo1 {
 	      
 	      
 	      .build();
+	      DataFetcher calculateComplicatedValue1 = new DataFetcher() {
+	    	    @Override		
+	    	    public  Object get(DataFetchingEnvironment environment) {
+	    	        // environment.getSource() is the value of the surrounding
+	    	        // object. In this case described by objectType
+	    	        List<String> value = new ArrayList<String>();// Perhaps getting from a DB or whatever 
+	    	        value.add("Hello11");
+	    	        value.add("Hello111");
+	    	        return value;
+	    	    }
+	    	};
 	      GraphQLObjectType person = newObject()
 	    	      .name("person")
 	    	      .field(newFieldDefinition()
@@ -72,7 +74,6 @@ public class Demo1 {
 	    	              //.type(queryType)
 	    	              //.name("hello1")
 	    	              .build())
-	    	      .field(newFieldDefinition().name("hello1").type(queryType).build())
 	    	      
 	    	      .build();
 	     
@@ -80,9 +81,33 @@ public class Demo1 {
                         //.query(queryType)
                         .query(person)
                         .build();
-         Object result = new GraphQL(schema).execute("{hello hello1{hello}}").getData();
+         Object result = new GraphQL(schema).execute("{person{ hello}").getData();
 
         System.out.println(result);
         // Prints: {hello=world}
     }
+	  private GraphQLFieldDefinition createUsersField() {
+		  
+		  DataFetcher calculateComplicatedValue1 = new DataFetcher() {
+	    	    @Override		
+	    	    public  Object get(DataFetchingEnvironment environment) {
+	    	        // environment.getSource() is the value of the surrounding
+	    	        // object. In this case described by objectType
+	    	        List<String> value = new ArrayList<String>();// Perhaps getting from a DB or whatever 
+	    	        value.add("Hello11");
+	    	        value.add("Hello111");
+	    	        return value;
+	    	    }
+	    	};
+		  return GraphQLFieldDefinition.newFieldDefinition().name("person")
+	    	
+	    	              .type(new GraphQLList(GraphQLString))
+	    	            
+	    	              .dataFetcher(calculateComplicatedValue1)
+	    	              //.type(queryType)
+	    	              //.name("hello1")
+	    	              .build();
+	    	      
+	    	      
+	  }
 }
