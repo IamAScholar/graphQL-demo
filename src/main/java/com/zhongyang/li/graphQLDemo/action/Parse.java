@@ -2,18 +2,29 @@ package com.zhongyang.li.graphQLDemo.action;
 
 import static graphql.Scalars.GraphQLInt;
 import static graphql.Scalars.GraphQLString;
+import static graphql.Scalars.GraphQLFloat;
+import static graphql.Scalars.GraphQLBoolean;
 import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.zhongyang.li.graphQLDemo.bean.User;
 
+import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLOutputType;
+import graphql.schema.GraphQLSchema;
 
 public class Parse {
 	
@@ -42,36 +53,5 @@ public class Parse {
 		}
     	
     }
-//    private GraphQLFieldDefinition createUserField() {
-//        return GraphQLFieldDefinition.newFieldDefinition()
-//                .name("user")
-//                
-//                .argument(newArgument().name("id").type(GraphQLInt).build())
-//                .type(userType)
-//                .dataFetcher(environment -> {
-//                    // 获取查询参数
-//                    int id = environment.getArgument("id");
-//
-//                    // 执行查询, 这里随便用一些测试数据来说明问题
-//                    User user = new User();
-//                    user.setId(id);
-//                    user.setAge(id + 15);
-//                    user.setSex(id % 2);
-//                    user.setName("Name_" + id);
-//                    user.setPic("pic_" + id + ".jpg");
-//                    return user;
-//                })
-//                .build();
-//    }
-//    
-    public static GraphQLFieldDefinition createUserField(String query){
-    	
-    	
-    	
-    	return null;
-    }
-	public static  void main(String args[]) {
-		//beanToType(com.zhongyang.li.graphQLDemo.bean.User.class);
-//        System.out.println(com.zhongyang.li.graphQLDemo.bean.User.class.getSimpleName());
-	}
+
 }
